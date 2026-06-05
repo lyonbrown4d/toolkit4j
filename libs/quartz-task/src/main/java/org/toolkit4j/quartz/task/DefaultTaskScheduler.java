@@ -31,13 +31,20 @@ import org.toolkit4j.quartz.task.internal.TaskSchedule;
 @Slf4j
 public class DefaultTaskScheduler implements TaskScheduler {
 
-  private static final String JOB_GROUP = "toolkit4j-tasks";
-  private static final String TRIGGER_GROUP = "toolkit4j-tasks";
+  private static final String DEFAULT_GROUP = "toolkit4j-tasks";
 
   private final Scheduler scheduler;
+  private final String jobGroup;
+  private final String triggerGroup;
 
   public DefaultTaskScheduler(Scheduler scheduler) {
+    this(scheduler, DEFAULT_GROUP);
+  }
+
+  public DefaultTaskScheduler(Scheduler scheduler, String sharedGroup) {
     this.scheduler = Objects.requireNonNull(scheduler, "scheduler");
+    this.jobGroup = requireNonBlank(sharedGroup, "sharedGroup");
+    this.triggerGroup = jobGroup;
     log.debug(
         "Initialized quartz-task wrapper with external scheduler type={}",
         scheduler.getClass().getName());
@@ -79,8 +86,8 @@ public class DefaultTaskScheduler implements TaskScheduler {
           "Registered Quartz task id={} with triggerKey={}, jobGroup={}, triggerGroup={}",
           registration.taskId(),
           trigger.getKey(),
-          JOB_GROUP,
-          TRIGGER_GROUP);
+          jobGroup,
+          triggerGroup);
     } catch (ObjectAlreadyExistsException e) {
       if (registration.conflictPolicy() == TaskRegistrationConflictPolicy.IGNORE_IF_EXISTS) {
         log.debug(
@@ -120,23 +127,23 @@ public class DefaultTaskScheduler implements TaskScheduler {
 
   @Override
   public void pause(@NonNull String taskId) {
-    val jobKey = jobKey(taskId);
-    log.debug("Pausing Quartz task id={}", taskId);
-    withScheduler("pause task: " + taskId, () -> scheduler.pauseJob(jobKey));
     if (!exists(taskId)) {
       throw new TaskNotFoundException("task not found: " + taskId);
     }
+    val jobKey = jobKey(taskId);
+    log.debug("Pausing Quartz task id={}", taskId);
+    withScheduler("pause task: " + taskId, () -> scheduler.pauseJob(jobKey));
     log.debug("Paused Quartz task id={}", taskId);
   }
 
   @Override
   public void resume(@NonNull String taskId) {
-    val jobKey = jobKey(taskId);
-    log.debug("Resuming Quartz task id={}", taskId);
-    withScheduler("resume task: " + taskId, () -> scheduler.resumeJob(jobKey));
     if (!exists(taskId)) {
       throw new TaskNotFoundException("task not found: " + taskId);
     }
+    val jobKey = jobKey(taskId);
+    log.debug("Resuming Quartz task id={}", taskId);
+    withScheduler("resume task: " + taskId, () -> scheduler.resumeJob(jobKey));
     log.debug("Resumed Quartz task id={}", taskId);
   }
 
@@ -182,17 +189,17 @@ public class DefaultTaskScheduler implements TaskScheduler {
   @Override
   public List<TaskInfo> listTasks() {
     return withScheduler(
-            "list tasks", () -> scheduler.getJobKeys(GroupMatcher.jobGroupEquals(JOB_GROUP)))
+            "list tasks", () -> scheduler.getJobKeys(GroupMatcher.jobGroupEquals(jobGroup)))
         .stream()
-        .map(this::getJobDetail)
-        .filter(Objects::nonNull)
         .map(this::toTaskInfo)
+        .filter(Objects::nonNull)
         .sorted(Comparator.comparing(TaskInfo::taskId))
         .toList();
   }
 
-  private JobDetail getJobDetail(JobKey jobKey) {
-    return withScheduler("query job detail: " + jobKey, () -> scheduler.getJobDetail(jobKey));
+  private @org.jetbrains.annotations.Nullable TaskInfo toTaskInfo(JobKey jobKey) {
+    val detail = withScheduler("query job detail: " + jobKey, () -> scheduler.getJobDetail(jobKey));
+    return detail == null ? null : toTaskInfo(detail);
   }
 
   private @NotNull TaskInfo toTaskInfo(@NotNull JobDetail jobDetail) {
@@ -291,7 +298,7 @@ public class DefaultTaskScheduler implements TaskScheduler {
           "invalid cron expression: " + schedule.cronExpression(), e);
     }
     return TriggerBuilder.newTrigger()
-        .withIdentity(identity, TRIGGER_GROUP)
+        .withIdentity(identity, triggerGroup)
         .forJob(jobKey)
         .withSchedule(cronSchedule)
         .build();
@@ -300,7 +307,7 @@ public class DefaultTaskScheduler implements TaskScheduler {
   private Trigger buildOnceTrigger(JobKey jobKey, String identity, @NotNull TaskSchedule schedule) {
     val startAt = Date.from(schedule.onceFireAt());
     return TriggerBuilder.newTrigger()
-        .withIdentity(identity, TRIGGER_GROUP)
+        .withIdentity(identity, triggerGroup)
         .forJob(jobKey)
         .startAt(startAt)
         .withSchedule(SimpleScheduleBuilder.simpleSchedule().withRepeatCount(0))
@@ -314,7 +321,7 @@ public class DefaultTaskScheduler implements TaskScheduler {
     }
     val startAt = Date.from(schedule.fixedStartAt());
     return TriggerBuilder.newTrigger()
-        .withIdentity(identity, TRIGGER_GROUP)
+        .withIdentity(identity, triggerGroup)
         .forJob(jobKey)
         .startAt(startAt)
         .withSchedule(
@@ -382,6 +389,14 @@ public class DefaultTaskScheduler implements TaskScheduler {
 
   @Contract("_ -> new")
   private @NotNull JobKey jobKey(String taskId) {
-    return JobKey.jobKey(taskId, JOB_GROUP);
+    return JobKey.jobKey(taskId, jobGroup);
+  }
+
+  private static String requireNonBlank(String value, String fieldName) {
+    if (value == null || value.isBlank()) {
+      throw new TaskSchedulingException(
+          "task scheduler " + fieldName + " must not be null or blank");
+    }
+    return value;
   }
 }

@@ -3,6 +3,7 @@ package org.toolkit4j.quartz.task.internal;
 import io.soabase.recordbuilder.core.RecordBuilder;
 import lombok.NonNull;
 import lombok.val;
+import org.toolkit4j.quartz.task.TaskRegistrationException;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -31,7 +32,7 @@ public record TaskSchedule(
 
   public static TaskSchedule fixedInterval(@NonNull Duration interval,@NonNull Instant startAt) {
     if (interval.isZero() || interval.isNegative()) {
-      throw new IllegalArgumentException("interval must be positive.");
+      throw new TaskRegistrationException("interval must be positive.");
     }
     return TaskScheduleBuilder.builder()
         .type(TaskScheduleType.FIXED_INTERVAL)

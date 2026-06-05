@@ -19,7 +19,7 @@ plugins {
 }
 
 /** Maven coordinates; Central GitHub namespace is typically io.github.{lowercase login}. */
-group = "io.github.daiyuang"
+group = "io.github.lyonbrown4d"
 
 version = "0.0.6"
 
@@ -55,11 +55,11 @@ subprojects {
         name.set(stringPropertyOrDefault("POM_NAME") { "toolkit4j-${project.name}" })
         description.set(
           stringPropertyOrDefault("POM_DESCRIPTION") {
-            "Lightweight JVM utility toolkit — module \"${project.name}\". See https://github.com/DaiYuANg/toolkit4j"
+            "Lightweight JVM utility toolkit — module \"${project.name}\". See https://github.com/lyonbrown4d/toolkit4j"
           }
         )
         inceptionYear.set(stringPropertyOrDefault("POM_INCEPTION_YEAR") { "2026" })
-        url.set(stringPropertyOrDefault("POM_URL") { "https://github.com/DaiYuANg/toolkit4j" })
+        url.set(stringPropertyOrDefault("POM_URL") { "https://github.com/lyonbrown4d/toolkit4j" })
         licenses {
           license {
             name.set(
@@ -75,23 +75,23 @@ subprojects {
         }
         developers {
           developer {
-            id.set(stringPropertyOrDefault("POM_DEVELOPER_ID") { "daiyuang" })
-            name.set(stringPropertyOrDefault("POM_DEVELOPER_NAME") { "DaiYuANg" })
-            url.set(stringPropertyOrDefault("POM_DEVELOPER_URL") { "https://github.com/DaiYuANg" })
+            id.set(stringPropertyOrDefault("POM_DEVELOPER_ID") { "lyonbrown4d" })
+            name.set(stringPropertyOrDefault("POM_DEVELOPER_NAME") { "lyonbrown4d" })
+            url.set(stringPropertyOrDefault("POM_DEVELOPER_URL") { "https://github.com/lyonbrown4d" })
           }
         }
         scm {
           url.set(
-            stringPropertyOrDefault("POM_SCM_URL") { "https://github.com/DaiYuANg/toolkit4j" }
+            stringPropertyOrDefault("POM_SCM_URL") { "https://github.com/lyonbrown4d/toolkit4j" }
           )
           connection.set(
             stringPropertyOrDefault("POM_SCM_CONNECTION") {
-              "scm:git:https://github.com/DaiYuANg/toolkit4j.git"
+              "scm:git:https://github.com/lyonbrown4d/toolkit4j.git"
             }
           )
           developerConnection.set(
             stringPropertyOrDefault("POM_SCM_DEV_CONNECTION") {
-              "scm:git:ssh://git@github.com/DaiYuANg/toolkit4j.git"
+              "scm:git:ssh://git@github.com/lyonbrown4d/toolkit4j.git"
             }
           )
         }

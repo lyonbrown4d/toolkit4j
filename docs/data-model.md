@@ -1,6 +1,6 @@
 # Data Model
 
-Artifact: `io.github.daiyuang:data-model:0.0.4`
+Artifact: `io.github.lyonbrown4d:data-model:0.0.4`
 
 ## What it provides
 

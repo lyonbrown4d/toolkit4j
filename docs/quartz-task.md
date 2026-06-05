@@ -1,6 +1,6 @@
 # Quartz Task
 
-Artifact: `io.github.daiyuang:quartz-task:0.0.4`
+Artifact: `io.github.lyonbrown4d:quartz-task:0.0.4`
 
 ## What it provides
 

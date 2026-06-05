@@ -269,6 +269,49 @@ class DefaultTaskSchedulerTest {
   }
 
   @Test
+  void testCustomGroupAllowsSameTaskIdInSameScheduler() throws Exception {
+    scheduler = createTestScheduler();
+    taskScheduler = new DefaultTaskScheduler(scheduler, "toolkit4j-group-a");
+    var aliasScheduler = new DefaultTaskScheduler(scheduler, "toolkit4j-group-b");
+    scheduler.start();
+
+    taskScheduler.register(
+        ManualTriggerJob.class, options -> options.id("shared-id").interval(Duration.ofSeconds(10)));
+
+    aliasScheduler.register(
+        OneTimeJob.class,
+        options ->
+            options.id("shared-id").startAt(Instant.now().plusSeconds(30)).ifExistsIgnore(true));
+
+    assertEquals(1, taskScheduler.listTasks().size());
+    assertEquals(1, aliasScheduler.listTasks().size());
+    assertEquals(TaskScheduleKind.INTERVAL, taskScheduler.getTask("shared-id").orElseThrow().scheduleType());
+    assertEquals(TaskScheduleKind.ONCE, aliasScheduler.getTask("shared-id").orElseThrow().scheduleType());
+  }
+
+  @Test
+  void testPauseUnknownTask_throwsTaskNotFound() throws Exception {
+    scheduler = createTestScheduler();
+    taskScheduler = new DefaultTaskScheduler(scheduler);
+
+    assertThrows(TaskNotFoundException.class, () -> taskScheduler.pause("missing-id"));
+    assertThrows(TaskNotFoundException.class, () -> taskScheduler.resume("missing-id"));
+  }
+
+  @Test
+  void testNegativeInterval_rejectedAtRegistration() throws Exception {
+    scheduler = createTestScheduler();
+    taskScheduler = new DefaultTaskScheduler(scheduler);
+
+    assertThrows(
+        TaskRegistrationException.class,
+        () ->
+            taskScheduler.register(
+                ManualTriggerJob.class,
+                options -> options.id("bad-interval").interval(Duration.ofMillis(-1))));
+  }
+
+  @Test
   void testNullJobDataValue_throwsTaskRegistrationException() throws Exception {
     scheduler = createTestScheduler();
     taskScheduler = new DefaultTaskScheduler(scheduler);

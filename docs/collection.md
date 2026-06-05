@@ -1,6 +1,6 @@
 # Collection
 
-Artifact: `io.github.daiyuang:collection:0.0.4`
+Artifact: `io.github.lyonbrown4d:collection:0.0.4`
 
 ## What it provides
 

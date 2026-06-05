@@ -7,18 +7,18 @@
 
 ## Installation
 
-`toolkit4j` artifacts are published to Maven Central under `io.github.daiyuang`.
+`toolkit4j` artifacts are published to Maven Central under `io.github.lyonbrown4d`.
 
 ### Gradle BOM
 
 ```kotlin
 dependencies {
-  implementation(platform("io.github.daiyuang:toolkit4j-bom:0.0.4"))
-  implementation("io.github.daiyuang:collection")
-  // implementation("io.github.daiyuang:data-model")
-  // implementation("io.github.daiyuang:net")
-  // implementation("io.github.daiyuang:hibernate-snowflake-id")
-  // implementation("io.github.daiyuang:quartz-task")
+  implementation(platform("io.github.lyonbrown4d:toolkit4j-bom:0.0.4"))
+  implementation("io.github.lyonbrown4d:collection")
+  // implementation("io.github.lyonbrown4d:data-model")
+  // implementation("io.github.lyonbrown4d:net")
+  // implementation("io.github.lyonbrown4d:hibernate-snowflake-id")
+  // implementation("io.github.lyonbrown4d:quartz-task")
 }
 ```
 
@@ -26,11 +26,11 @@ dependencies {
 
 ```kotlin
 dependencies {
-  implementation("io.github.daiyuang:collection:0.0.4")
-  // implementation("io.github.daiyuang:data-model:0.0.4")
-  // implementation("io.github.daiyuang:net:0.0.4")
-  // implementation("io.github.daiyuang:hibernate-snowflake-id:0.0.4")
-  // implementation("io.github.daiyuang:quartz-task:0.0.4")
+  implementation("io.github.lyonbrown4d:collection:0.0.4")
+  // implementation("io.github.lyonbrown4d:data-model:0.0.4")
+  // implementation("io.github.lyonbrown4d:net:0.0.4")
+  // implementation("io.github.lyonbrown4d:hibernate-snowflake-id:0.0.4")
+  // implementation("io.github.lyonbrown4d:quartz-task:0.0.4")
 }
 ```
 
@@ -40,7 +40,7 @@ dependencies {
 <dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>io.github.daiyuang</groupId>
+      <groupId>io.github.lyonbrown4d</groupId>
       <artifactId>toolkit4j-bom</artifactId>
       <version>0.0.4</version>
       <type>pom</type>
@@ -54,7 +54,7 @@ dependencies {
 
 ```xml
 <dependency>
-  <groupId>io.github.daiyuang</groupId>
+  <groupId>io.github.lyonbrown4d</groupId>
   <artifactId>collection</artifactId>
 </dependency>
 ```

@@ -19,6 +19,6 @@ Current highlights:
 
 All modules use:
 
-- Group: `io.github.daiyuang`
+- Group: `io.github.lyonbrown4d`
 - Version: `0.0.4`
-- BOM: `io.github.daiyuang:toolkit4j-bom:0.0.4`
+- BOM: `io.github.lyonbrown4d:toolkit4j-bom:0.0.4`
