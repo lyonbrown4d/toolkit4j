@@ -27,6 +27,7 @@
 - `HashMapTrie`，支持 insert、search、startsWith、keysWithPrefix 等
 - ⚠️ **试验性 API**：`HashMapTrie` 标注为 `@ApiStatus.Experimental`，后续版本可能调整
 - `PrefixSet`，面向字符串的前缀匹配集合，支持 add/contains/remove、`containsPrefix`、`valuesWithPrefix`
+- `CodePointPrefixSet`，按 Unicode code point 处理前缀的字符串集合（推荐用于 emoji 等超平面字符）
 
 #### Tree（树形结构）
 - 接口：`Tree`、`ListTree`、`SetTree`、`LinkedTree`、`SortedTree`、`TreeNode`、`ListTreeNode`、`SetTreeNode`、`SortedTreeNode`、`LinkedTreeNode`
@@ -104,6 +105,7 @@ A lightweight JVM collection and data structure toolkit that complements the JDK
 - `HashMapTrie` with insert, search, startsWith, keysWithPrefix, etc.
 - ⚠️ **Experimental API**: `HashMapTrie` is annotated with `@ApiStatus.Experimental`; API may change in future releases
 - `PrefixSet`, string-based prefix matching set with add/contains/remove, `containsPrefix`, `valuesWithPrefix`
+- `CodePointPrefixSet`, prefix set that matches by Unicode code points (recommended for emojis / non-BMP chars)
 
 #### Tree (hierarchical structure)
 - Interfaces: `Tree`, `ListTree`, `SetTree`, `LinkedTree`, `SortedTree`, `TreeNode`, `ListTreeNode`, `SetTreeNode`, `SortedTreeNode`, `LinkedTreeNode`
