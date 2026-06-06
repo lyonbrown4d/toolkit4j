@@ -2,6 +2,8 @@ package org.toolkit4j.collection.trie;
 
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import lombok.val;
@@ -79,27 +81,25 @@ public class HashMapTrie<K, V> implements Trie<K, V> {
 
   @Override
   public Set<List<K>> keysWithPrefix(@NotNull Iterable<K> prefixSequence) {
-    val prefixList = StreamSupport.stream(prefixSequence.spliterator(),false).toList();
+    val prefixList = StreamSupport.stream(prefixSequence.spliterator(), false).toList();
     val node = findNode(prefixList);
     if (node == null) {
       return Collections.emptySet();
     }
-    val results = new HashSet<List<K>>();
-    collect(node, new LinkedList<>(prefixList), results);
-    return results;
+    return keysFrom(node, prefixList).collect(Collectors.toSet());
   }
 
-  private void collect(@NotNull TrieNode<K, V> node, LinkedList<K> path, Set<List<K>> results) {
-    if (node.isEnd()) {
-      results.add(new ArrayList<>(path));
-    }
-    node.getChildren()
-        .forEach(
-            (key, value) -> {
-              path.addLast(key);
-              collect(value, path, results);
-              path.removeLast();
-            });
+  private @NotNull Stream<List<K>> keysFrom(@NotNull TrieNode<K, V> node, @NotNull List<K> path) {
+    val current = node.isEnd() ? Stream.of(List.copyOf(path)) : Stream.<List<K>>empty();
+    val descendants =
+        node.getChildren().entrySet().stream()
+            .flatMap(
+                entry -> {
+                  val childPath = new ArrayList<>(path);
+                  childPath.add(entry.getKey());
+                  return keysFrom(entry.getValue(), childPath);
+                });
+    return Stream.concat(current, descendants);
   }
 
   @Override

@@ -85,8 +85,6 @@ public class PrefixSet {
 
   private static String toValue(@NotNull List<Character> key) {
     Objects.requireNonNull(key, "key");
-    var builder = new StringBuilder(key.size());
-    key.forEach(builder::append);
-    return builder.toString();
+    return key.stream().map(String::valueOf).collect(Collectors.joining());
   }
 }

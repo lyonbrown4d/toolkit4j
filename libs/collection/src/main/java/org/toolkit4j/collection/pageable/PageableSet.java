@@ -3,9 +3,8 @@ package org.toolkit4j.collection.pageable;
 import static java.util.Collections.emptySet;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import lombok.Data;
@@ -99,23 +98,16 @@ public class PageableSet<T> implements PageableCollection<T, Set<T>> {
     if (length <= 0) {
       return emptySet();
     }
-    Iterator<T> it = set.iterator();
-    for (int i = 0; i < skip; i++) {
-      if (!it.hasNext()) {
-        throw new IndexOutOfBoundsException(
-          "skip=%d past end of set (size=%d)".formatted(skip, set.size()));
-      }
-      it.next();
-    }
-    val out = new HashSet<T>(Math.max(length, 16));
-    IntStream.range(0, length).forEach(n -> {
-      if (!it.hasNext()) {
-        throw new IndexOutOfBoundsException(
+    val out =
+        set.stream()
+            .skip(skip)
+            .limit(length)
+            .collect(Collectors.toCollection(() -> HashSet.<T>newHashSet(length)));
+    if (out.size() < length) {
+      throw new IndexOutOfBoundsException(
           "expected %d elements from offset %d but iterator ended early (size=%d)"
-            .formatted(length, skip, set.size()));
-      }
-      out.add(it.next());
-    });
+              .formatted(length, skip, set.size()));
+    }
     return out;
   }
 }

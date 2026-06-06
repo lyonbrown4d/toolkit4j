@@ -1,8 +1,8 @@
 package org.toolkit4j.data.model.error;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,8 +47,9 @@ public class ErrorInfo<C> {
   }
 
   public @NotNull ErrorInfo<C> withDetail(@NotNull ErrorDetail detail) {
-    var merged = new ArrayList<>(details);
-    merged.add(Objects.requireNonNull(detail, "detail"));
+    var merged =
+        Stream.concat(details.stream(), Stream.of(Objects.requireNonNull(detail, "detail")))
+            .toList();
     return new ErrorInfo<>(code, message, merged);
   }
 }

@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.toSet;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -61,14 +62,7 @@ public class Trees {
     if (flat.isEmpty()) return new ListTreeImpl<>(List.of());
 
     val nodeMap = flat.stream().collect(Collectors.toMap(id, n -> n));
-    val childrenMap = new HashMap<ID, List<T>>();
-    flat.forEach(
-        node -> {
-          val pid = parentId.apply(node);
-          if (pid != null && nodeMap.containsKey(pid)) {
-            childrenMap.computeIfAbsent(pid, k -> new ArrayList<>()).add(node);
-          }
-        });
+    Map<ID, List<T>> childrenMap = groupChildren(flat, parentId, nodeMap, ArrayList::new);
 
     val rootsStream =
         flat.stream()
@@ -97,14 +91,7 @@ public class Trees {
     if (flat.isEmpty()) return new SetTreeImpl<>(Set.of());
 
     val nodeMap = flat.stream().collect(Collectors.toMap(id, n -> n));
-    val childrenMap = new HashMap<ID, Set<T>>();
-    flat.forEach(
-        node -> {
-          val pid = parentId.apply(node);
-          if (pid != null && nodeMap.containsKey(pid)) {
-            childrenMap.computeIfAbsent(pid, k -> new HashSet<>()).add(node);
-          }
-        });
+    Map<ID, Set<T>> childrenMap = groupChildren(flat, parentId, nodeMap, HashSet::new);
 
     val roots =
         flat.stream()
@@ -139,14 +126,8 @@ public class Trees {
     if (flat.isEmpty()) return new LinkedTreeImpl<>(new LinkedHashSet<>());
 
     val nodeMap = flat.stream().collect(Collectors.toMap(id, n -> n));
-    val childrenMap = new HashMap<ID, LinkedHashSet<T>>();
-    flat.forEach(
-        node -> {
-          val pid = parentId.apply(node);
-          if (pid != null && nodeMap.containsKey(pid)) {
-            childrenMap.computeIfAbsent(pid, k -> new LinkedHashSet<>()).add(node);
-          }
-        });
+    Map<ID, LinkedHashSet<T>> childrenMap =
+        groupChildren(flat, parentId, nodeMap, LinkedHashSet::new);
 
     val roots =
         flat.stream()
@@ -190,14 +171,7 @@ public class Trees {
           new TreeSet<>(comparing((TreeNode<T> n) -> n.data(), comparator)));
 
     val nodeMap = flat.stream().collect(Collectors.toMap(id, n -> n));
-    val childrenMap = new HashMap<ID, List<T>>();
-    flat.forEach(
-        node -> {
-          val pid = parentId.apply(node);
-          if (pid != null && nodeMap.containsKey(pid)) {
-            childrenMap.computeIfAbsent(pid, k -> new ArrayList<>()).add(node);
-          }
-        });
+    Map<ID, List<T>> childrenMap = groupChildren(flat, parentId, nodeMap, ArrayList::new);
 
     val nodeComparator = Comparator.<TreeNode<T>, T>comparing(TreeNode::data, comparator);
     val roots =
@@ -249,4 +223,23 @@ public class Trees {
     val children = sorted.stream().map(c -> buildNode(c, id, childrenMap, siblingSort)).toList();
     return new ListTreeNodeImpl<>(data, children);
   }
+
+  private <T, ID, C extends Collection<T>> @NotNull Map<ID, C> groupChildren(
+      @NotNull Collection<T> flat,
+      @NotNull Function<T, ID> parentId,
+      @NotNull Map<ID, T> nodeMap,
+      @NotNull Supplier<C> childrenFactory) {
+    return flat.stream()
+        .map(node -> new ChildCandidate<>(parentId.apply(node), node))
+        .filter(
+            candidate ->
+                candidate.parentId() != null && nodeMap.containsKey(candidate.parentId()))
+        .collect(
+            Collectors.groupingBy(
+                ChildCandidate::parentId,
+                HashMap::new,
+                Collectors.mapping(ChildCandidate::node, toCollection(childrenFactory))));
+  }
+
+  private record ChildCandidate<ID, T>(ID parentId, T node) {}
 }

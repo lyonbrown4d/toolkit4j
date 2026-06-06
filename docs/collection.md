@@ -1,12 +1,13 @@
 # Collection
 
-Artifact: `io.github.lyonbrown4d:collection:0.0.4`
+Artifact: `io.github.lyonbrown4d:collection:0.0.6`
 
 ## What it provides
 
 - Pageable collections: `PageableList`, `PageableSet`
 - Table structures: `HashTable`, `TreeTable`, `ConcurrentHashTable`
 - Trie: `HashMapTrie`
+- Collection diffing: `CollectionDiff`, `DiffResult`
 - Tree models and builders in `org.toolkit4j.collection.tree`
 
 ## Minimal examples
@@ -15,6 +16,7 @@ Artifact: `io.github.lyonbrown4d:collection:0.0.4`
 import org.toolkit4j.collection.pageable.PageableList;
 import org.toolkit4j.collection.table.HashTable;
 import org.toolkit4j.collection.trie.HashMapTrie;
+import org.toolkit4j.collection.diff.CollectionDiff;
 
 var pageable = new PageableList<>(java.util.List.of(1, 2, 3, 4, 5));
 var page = pageable.page(1, 2); // [1, 2]
@@ -25,10 +27,18 @@ table.put("r1", "c1", 100);
 var trie = new HashMapTrie<Character, String>();
 trie.insert(java.util.List.of('j', 'a', 'v', 'a'), "java");
 var value = trie.search(java.util.List.of('j', 'a', 'v', 'a'));
+
+record User(long id, String name) {}
+
+var previous = java.util.List.of(new User(1, "Alice"), new User(2, "Bob"));
+var current = java.util.List.of(new User(1, "Alice"), new User(2, "Bobby"));
+var diff = CollectionDiff.compare(previous, current, User::id);
+var changed = diff.changed();
 ```
 
 ## Notes
 
 - Requesting a page beyond the end of the backing data returns an empty page for both `PageableList` and `PageableSet`.
 - `HashMapTrie` is marked experimental in the codebase.
+- `CollectionDiff` requires unique non-null keys on each side; duplicate keys are treated as ambiguous input.
 - This module targets utility scenarios and avoids heavyweight dependencies.

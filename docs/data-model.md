@@ -1,6 +1,6 @@
 # Data Model
 
-Artifact: `io.github.lyonbrown4d:data-model:0.0.4`
+Artifact: `io.github.lyonbrown4d:data-model:0.0.6`
 
 ## What it provides
 
@@ -10,6 +10,7 @@ Artifact: `io.github.lyonbrown4d:data-model:0.0.4`
 - `time`: `DateTimePattern`, `DateTimeFormats`, `LocalDateRange`, `LocalDateTimeRange`, `InstantRange`, `YearMonthValue`, `YearMonthRange`
 - `range`: `Range<T>`, `Bound<T>`, `BoundType`
 - `money`: `Money`
+- `measure`: `DataSize`, `DataUnit`, `DataRate`
 - `enumeration`: `EnumValue<T>`, `EnumLookup`, `EnumValues`
 - `error`: `ErrorCode`, `ErrorInfo`, `FieldError`
 - `value`: `KeyValue<K, V>`, `Option<T>`, `Geo`
@@ -22,6 +23,7 @@ Artifact: `io.github.lyonbrown4d:data-model:0.0.4`
 - `time`: formatter presets plus semantic date/time range models
 - `range`: generic comparable range model
 - `money`: same-currency monetary value object
+- `measure`: data size and data rate value objects
 - `enumeration`: enum primary-value lookup support
 - `error`: reusable error and field-error models
 - `value`: small generic value carriers
@@ -33,6 +35,9 @@ import org.toolkit4j.data.model.page.PageRequest;
 import org.toolkit4j.data.model.page.PageResult;
 import org.toolkit4j.data.model.envelope.Result;
 import org.toolkit4j.data.model.money.Money;
+import org.toolkit4j.data.model.measure.DataRate;
+import org.toolkit4j.data.model.measure.DataSize;
+import org.toolkit4j.data.model.measure.DataUnit;
 import org.toolkit4j.data.model.range.Range;
 import org.toolkit4j.data.model.sort.Sortable;
 import org.toolkit4j.data.model.time.DateTimeFormats;
@@ -53,6 +58,9 @@ var ok = Result.of(0, "ok", java.util.Map.of("id", 1L));
 var noData = ok.withoutData();
 
 var total = Money.of(new java.math.BigDecimal("19.99"), java.util.Currency.getInstance("USD"));
+var uploadSize = DataSize.parse("1.5 MiB");
+var uploadRate = DataRate.of(uploadSize, java.time.Duration.ofSeconds(3));
+var kibPerSecond = uploadRate.to(DataUnit.KIBIBYTES);
 var activeWindow = Range.closed(1, 10);
 var timestamp = DateTimeFormats.of(DateTimePattern.STANDARD_DATE_TIME)
   .format(java.time.LocalDateTime.of(2026, 3, 26, 8, 9, 10));
@@ -108,6 +116,22 @@ var subtotal = Money.of(new java.math.BigDecimal("19.99"), usd);
 var tax = Money.of(new java.math.BigDecimal("1.50"), usd);
 var total = subtotal.add(tax);
 var doubled = subtotal.multiply(new java.math.BigDecimal("2"));
+```
+
+## Measure
+
+```java
+import java.time.Duration;
+import org.toolkit4j.data.model.measure.DataRate;
+import org.toolkit4j.data.model.measure.DataSize;
+import org.toolkit4j.data.model.measure.DataUnit;
+
+var size = DataSize.parse("1.5 MiB");
+var bytes = size.bytes();
+var megabytes = size.toDecimal(DataUnit.MEGABYTES);
+
+var rate = DataRate.of(size, Duration.ofSeconds(3));
+var kibPerSecond = rate.to(DataUnit.KIBIBYTES);
 ```
 
 ## Range
@@ -192,6 +216,8 @@ var error = ErrorInfo.of("INVALID_INPUT", "invalid input")
 - `PageResult.empty()` uses first-page semantics (`page = 1`) rather than zero-based page numbering.
 - `Result<C, T>` now lives under `org.toolkit4j.data.model.envelope`.
 - `Money` is intentionally lightweight: same-currency arithmetic only, with no exchange-rate or formatting layer.
+- `DataSize` is non-negative and stores an exact byte count.
+- Decimal data units use powers of 1000; binary data units use powers of 1024.
 - `time` currently focuses on formatter presets, semantic time ranges, and a small set of reusable time value objects; it does not add mutable registries or time-zone policy.
 - Module name: `org.toolkit4j.data.model`
 - `data-model` is organized by subpackage responsibility rather than a flat package.

@@ -11,6 +11,10 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("unused")
 @RecordBuilder
 public record YearMonthValue(int year, int month) implements Comparable<YearMonthValue> {
+  public YearMonthValue {
+    YearMonth.of(year, month);
+  }
+
   public static @NotNull YearMonthValue of(int year, int month) {
     return new YearMonthValue(year, month);
   }

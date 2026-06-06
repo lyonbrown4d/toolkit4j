@@ -31,7 +31,7 @@ public record TaskSchedule(
   }
 
   public static TaskSchedule fixedInterval(@NonNull Duration interval,@NonNull Instant startAt) {
-    if (interval.isZero() || interval.isNegative()) {
+    if (!interval.isPositive()) {
       throw new TaskRegistrationException("interval must be positive.");
     }
     return TaskScheduleBuilder.builder()

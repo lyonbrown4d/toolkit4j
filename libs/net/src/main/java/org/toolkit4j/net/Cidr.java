@@ -1,7 +1,7 @@
 package org.toolkit4j.net;
 
 import java.math.BigInteger;
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.val;
@@ -10,9 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
 /** CIDR 网段（支持 IPv4 / IPv6） */
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public final class Cidr {
-  private final IpAddress network;
-  @Getter private final int prefixLength;
+  @EqualsAndHashCode.Include private final IpAddress network;
+  @EqualsAndHashCode.Include @Getter private final int prefixLength;
   private final BigInteger networkValue;
   private final BigInteger maskValue;
 
@@ -81,15 +82,4 @@ public final class Cidr {
     return network + "/" + prefixLength;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    return o instanceof Cidr other
-        && network.equals(other.network)
-        && prefixLength == other.prefixLength;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(network, prefixLength);
-  }
 }

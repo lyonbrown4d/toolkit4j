@@ -2,8 +2,8 @@ package org.toolkit4j.net;
 
 import java.math.BigInteger;
 import java.net.InetAddress;
-import java.util.Objects;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /** IPv6 地址 */
+@EqualsAndHashCode
 public final class Ipv6Address implements IpAddress {
   private final BigInteger address; // 128位
 
@@ -75,13 +76,4 @@ public final class Ipv6Address implements IpAddress {
     return inet.getHostAddress();
   }
 
-  @Override
-  public boolean equals(Object o) {
-    return o instanceof Ipv6Address other && this.address.equals(other.address);
-  }
-
-  @Override
-  public int hashCode() {
-    return address.hashCode();
-  }
 }

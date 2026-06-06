@@ -40,6 +40,8 @@ rootProject.name = "toolkit4j"
 
 include("libs:collection")
 
+include("libs:text")
+
 include("libs:net")
 
 include("libs:data-model")

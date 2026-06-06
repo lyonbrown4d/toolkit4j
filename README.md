@@ -13,8 +13,9 @@
 
 ```kotlin
 dependencies {
-  implementation(platform("io.github.lyonbrown4d:toolkit4j-bom:0.0.4"))
+  implementation(platform("io.github.lyonbrown4d:toolkit4j-bom:0.0.6"))
   implementation("io.github.lyonbrown4d:collection")
+  // implementation("io.github.lyonbrown4d:text")
   // implementation("io.github.lyonbrown4d:data-model")
   // implementation("io.github.lyonbrown4d:net")
   // implementation("io.github.lyonbrown4d:hibernate-snowflake-id")
@@ -26,11 +27,12 @@ dependencies {
 
 ```kotlin
 dependencies {
-  implementation("io.github.lyonbrown4d:collection:0.0.4")
-  // implementation("io.github.lyonbrown4d:data-model:0.0.4")
-  // implementation("io.github.lyonbrown4d:net:0.0.4")
-  // implementation("io.github.lyonbrown4d:hibernate-snowflake-id:0.0.4")
-  // implementation("io.github.lyonbrown4d:quartz-task:0.0.4")
+  implementation("io.github.lyonbrown4d:collection:0.0.6")
+  // implementation("io.github.lyonbrown4d:text:0.0.6")
+  // implementation("io.github.lyonbrown4d:data-model:0.0.6")
+  // implementation("io.github.lyonbrown4d:net:0.0.6")
+  // implementation("io.github.lyonbrown4d:hibernate-snowflake-id:0.0.6")
+  // implementation("io.github.lyonbrown4d:quartz-task:0.0.6")
 }
 ```
 
@@ -42,7 +44,7 @@ dependencies {
     <dependency>
       <groupId>io.github.lyonbrown4d</groupId>
       <artifactId>toolkit4j-bom</artifactId>
-      <version>0.0.4</version>
+      <version>0.0.6</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -63,8 +65,9 @@ dependencies {
 
 ## Modules
 
-- `collection`: data structures such as pageable collections, table, trie, and tree helpers.
-- `data-model`: reusable model types such as `PageRequest`, `PageResult`, `Result`, `Sortable`, `Range`, `Money`, `ErrorInfo`, `EnumValue`, plus time presets and semantic time ranges.
+- `collection`: data structures such as pageable collections, table, trie, tree helpers, and collection diffing.
+- `text`: lightweight keyword matching utilities.
+- `data-model`: reusable model types such as `PageRequest`, `PageResult`, `Result`, `Sortable`, `Range`, `Money`, `DataSize`, `DataRate`, `ErrorInfo`, `EnumValue`, plus time presets and semantic time ranges.
 - `net`: IP / CIDR utility types (`Ipv4Address`, `Ipv6Address`, `Cidr`, `IpInfo`).
 - `hibernate-snowflake-id`: Hibernate integration for Agrona Snowflake ID generator.
 - `quartz-task`: high-level Quartz task registration and scheduling API.
@@ -80,6 +83,7 @@ Start from the docs index:
 Per-module guides:
 
 - [Collection](./docs/collection.md)
+- [Text](./docs/text.md)
 - [Data Model](./docs/data-model.md)
 - [Net](./docs/net.md)
 - [Hibernate Snowflake ID](./docs/hibernate-snowflake-id.md)

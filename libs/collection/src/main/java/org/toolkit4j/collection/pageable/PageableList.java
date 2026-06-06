@@ -2,6 +2,7 @@ package org.toolkit4j.collection.pageable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class PageableList<T> implements PageableCollection<T, List<T>> {
       return List.of();
     }
     val toIndex = Math.min(fromIndex + pageSize, data.size());
-    return new ArrayList<>(data.subList(fromIndex, toIndex));
+    return copyRange(fromIndex, toIndex);
   }
 
   @Override
@@ -71,6 +72,13 @@ public class PageableList<T> implements PageableCollection<T, List<T>> {
       throw new IndexOutOfBoundsException(
           "fromIndex=%d, toIndex=%d, size=%d".formatted(fromIndex, toIndex, data.size()));
     }
-    return new ArrayList<>(data.subList(fromIndex, toIndex));
+    return copyRange(fromIndex, toIndex);
+  }
+
+  private List<T> copyRange(int fromIndex, int toIndex) {
+    return data.stream()
+        .skip(fromIndex)
+        .limit(toIndex - fromIndex)
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 }

@@ -1,6 +1,6 @@
 # Net
 
-Artifact: `io.github.lyonbrown4d:net:0.0.4`
+Artifact: `io.github.lyonbrown4d:net:0.0.6`
 
 ## What it provides
 

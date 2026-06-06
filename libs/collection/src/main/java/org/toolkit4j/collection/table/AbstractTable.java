@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class AbstractTable<R, C, V> implements Table<R, C, V> {
   private final AtomicInteger size = new AtomicInteger(0);
@@ -86,6 +87,11 @@ public abstract class AbstractTable<R, C, V> implements Table<R, C, V> {
 
   @Override
   public Set<Cell<R, C, V>> cellSet() {
+    return stream().collect(Collectors.toSet());
+  }
+
+  @Override
+  public Stream<Cell<R, C, V>> stream() {
     return getBackingMap().entrySet().stream()
         .flatMap(
             rowEntry ->
@@ -93,8 +99,7 @@ public abstract class AbstractTable<R, C, V> implements Table<R, C, V> {
                     .map(
                         cellEntry ->
                             new RecordCell<>(
-                                rowEntry.getKey(), cellEntry.getKey(), cellEntry.getValue())))
-        .collect(Collectors.toSet());
+                                rowEntry.getKey(), cellEntry.getKey(), cellEntry.getValue())));
   }
 
   @Override
@@ -116,7 +121,7 @@ public abstract class AbstractTable<R, C, V> implements Table<R, C, V> {
   @Override
   public Table<R, C, V> filter(BiPredicate<R, C> predicate) {
     AbstractTable<R, C, V> filtered = createInstance();
-    cellSet().stream()
+    stream()
         .filter(cell -> predicate.test(cell.getRowKey(), cell.getColumnKey()))
         .forEach(cell -> filtered.put(cell.getRowKey(), cell.getColumnKey(), cell.getValue()));
     return filtered;
@@ -125,7 +130,7 @@ public abstract class AbstractTable<R, C, V> implements Table<R, C, V> {
   @Override
   public <V2> Table<R, C, V2> mapValues(Function<? super V, ? extends V2> mapper) {
     AbstractTable<R, C, V2> mapped = createInstance();
-    cellSet()
+    stream()
         .forEach(
             cell ->
                 mapped.put(cell.getRowKey(), cell.getColumnKey(), mapper.apply(cell.getValue())));

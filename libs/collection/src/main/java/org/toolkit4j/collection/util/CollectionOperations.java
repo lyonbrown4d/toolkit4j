@@ -12,7 +12,6 @@ import lombok.experimental.UtilityClass;
 import lombok.val;
 
 import static java.util.Collections.emptySet;
-import static java.util.stream.Collectors.*;
 
 /**
  * 集合运算工具类。
@@ -40,7 +39,7 @@ public class CollectionOperations {
   @SafeVarargs
   public <T> List<T> concat(Collection<? extends T>... collections) {
     return streamOf(collections)
-      .collect(toList());
+      .toList();
   }
 
   /**
@@ -54,7 +53,7 @@ public class CollectionOperations {
   public <T> List<T> union(Collection<? extends T>... collections) {
     return streamOf(collections)
       .distinct()
-      .collect(toList());
+      .toList();
   }
 
   /**
@@ -93,9 +92,10 @@ public class CollectionOperations {
       .toList();
 
     return first.stream()
+      .<T>map(element -> element)
       .distinct()
       .filter(element -> remainingSets.stream().allMatch(set -> set.contains(element)))
-      .collect(toList());
+      .toList();
   }
 
   /**
@@ -121,9 +121,10 @@ public class CollectionOperations {
       : new LinkedHashSet<>(right);
 
     return left.stream()
+      .<T>map(element -> element)
       .distinct()
       .filter(element -> !rightSet.contains(element))
-      .collect(toList());
+      .toList();
   }
 
   /**
@@ -150,7 +151,7 @@ public class CollectionOperations {
         difference(right, left).stream()
       )
       .distinct()
-      .collect(toList());
+      .toList();
   }
 
   /**

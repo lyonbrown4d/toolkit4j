@@ -1,11 +1,12 @@
 package org.toolkit4j.net;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /** Port Range */
+@EqualsAndHashCode
 @Getter
 public final class PortRange {
   private final int start;
@@ -33,13 +34,4 @@ public final class PortRange {
     return start == end ? String.valueOf(start) : start + "-" + end;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    return o instanceof PortRange other && start == other.start && end == other.end;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(start, end);
-  }
 }

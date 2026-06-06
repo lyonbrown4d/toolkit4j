@@ -1,10 +1,7 @@
 package org.toolkit4j.collection.tree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.SortedSet;
 import java.util.stream.Stream;
-import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
 record SortedTreeImpl<T>(SortedSet<TreeNode<T>> roots) implements SortedTree<T> {
@@ -16,13 +13,6 @@ record SortedTreeImpl<T>(SortedSet<TreeNode<T>> roots) implements SortedTree<T> 
 
   @Override
   public @NotNull Stream<TreeNode<T>> breadthFirst() {
-    val result = new ArrayList<TreeNode<T>>();
-    val queue = new LinkedList<>(roots);
-    while (!queue.isEmpty()) {
-      val node = queue.poll();
-      result.add(node);
-      queue.addAll(node.children());
-    }
-    return result.stream();
+    return TreeStreams.breadthFirst(roots);
   }
 }

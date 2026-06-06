@@ -1,7 +1,5 @@
 package org.toolkit4j.data.model.page;
 
-import static java.util.Optional.ofNullable;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +10,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import lombok.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -79,7 +76,7 @@ public class PageResult<T> implements Serializable {
 
   @Contract(pure = true)
   public boolean isFirstPage() {
-    return ofNullable(this.page).orElse(DEFAULT_PAGE) <= DEFAULT_PAGE;
+    return Objects.requireNonNullElse(this.page, DEFAULT_PAGE) <= DEFAULT_PAGE;
   }
 
   @Contract(pure = true)
@@ -113,7 +110,7 @@ public class PageResult<T> implements Serializable {
 
   @Contract(pure = true)
   public @NotNull Collection<T> getContentOrEmpty() {
-    return ofNullable(this.content).orElseGet(Collections::emptyList);
+    return Objects.requireNonNullElseGet(this.content, Collections::emptyList);
   }
 
   @Contract(pure = true)
@@ -167,11 +164,11 @@ public class PageResult<T> implements Serializable {
   @Contract(" -> new")
   public @NotNull PageResult<T> normalized() {
     return new PageResult<>(
-        ofNullable(content).orElseGet(ArrayList::new),
-        ofNullable(page).orElse(DEFAULT_PAGE),
-        ofNullable(size).orElse(0),
-        ofNullable(totalElements).orElse(0L),
-        ofNullable(totalPages).orElse(0L));
+        Objects.requireNonNullElseGet(content, ArrayList::new),
+        Objects.requireNonNullElse(page, DEFAULT_PAGE),
+        Objects.requireNonNullElse(size, 0),
+        Objects.requireNonNullElse(totalElements, 0L),
+        Objects.requireNonNullElse(totalPages, 0L));
   }
 
   @Contract("_ -> new")
@@ -207,7 +204,7 @@ public class PageResult<T> implements Serializable {
 
   @Contract("_ -> new")
   public <R> @NotNull PageResult<R> mapContent(@NotNull Function<? super T, ? extends R> mapper) {
-    List<R> mapped = this.getContentAsList().stream().map(mapper).collect(Collectors.toList());
+    List<R> mapped = this.getContentAsList().stream().<R>map(mapper::apply).toList();
 
     return new PageResult<>(mapped, this.page, this.size, this.totalElements, this.totalPages);
   }

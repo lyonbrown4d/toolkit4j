@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-import lombok.val;
 
 /**
  * 树形结构接口。Tree interface.
@@ -32,19 +31,20 @@ public interface Tree<T> {
 
   /** 从根到第一个匹配节点的路径。Path from root to first matching node. */
   default List<TreeNode<T>> pathTo(Predicate<T> predicate) {
-    for (TreeNode<T> root : roots()) {
-      val path = pathFrom(root, predicate);
-      if (!path.isEmpty()) return path;
-    }
-    return List.of();
+    return roots().stream()
+        .map(root -> pathFrom(root, predicate))
+        .filter(path -> !path.isEmpty())
+        .findFirst()
+        .orElseGet(List::of);
   }
 
   private static <T> List<TreeNode<T>> pathFrom(TreeNode<T> node, Predicate<T> predicate) {
     if (predicate.test(node.data())) return List.of(node);
-    for (TreeNode<T> child : node.children()) {
-      val sub = pathFrom(child, predicate);
-      if (!sub.isEmpty()) return Stream.concat(Stream.of(node), sub.stream()).toList();
-    }
-    return List.of();
+    return node.children().stream()
+        .map(child -> pathFrom(child, predicate))
+        .filter(path -> !path.isEmpty())
+        .findFirst()
+        .map(path -> Stream.concat(Stream.of(node), path.stream()).toList())
+        .orElseGet(List::of);
   }
 }

@@ -85,8 +85,6 @@ public class CodePointPrefixSet {
 
   private static String toValue(@NotNull List<Integer> key) {
     Objects.requireNonNull(key, "key");
-    var builder = new StringBuilder();
-    key.forEach(builder::appendCodePoint);
-    return builder.toString();
+    return key.stream().map(Character::toString).collect(Collectors.joining());
   }
 }

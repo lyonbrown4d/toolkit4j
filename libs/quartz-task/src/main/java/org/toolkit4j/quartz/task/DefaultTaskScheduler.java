@@ -270,18 +270,11 @@ public class DefaultTaskScheduler implements TaskScheduler {
 
     val identity = registration.taskId() + "-" + schedule.type().name().toLowerCase();
 
-    switch (schedule.type()) {
-      case CRON -> {
-        return buildCronTrigger(jobKey, identity, schedule);
-      }
-      case ONCE -> {
-        return buildOnceTrigger(jobKey, identity, schedule);
-      }
-      case FIXED_INTERVAL -> {
-        return buildIntervalTrigger(jobKey, identity, schedule);
-      }
-      default -> throw new IllegalStateException("unknown schedule type: " + schedule.type());
-    }
+    return switch (schedule.type()) {
+      case CRON -> buildCronTrigger(jobKey, identity, schedule);
+      case ONCE -> buildOnceTrigger(jobKey, identity, schedule);
+      case FIXED_INTERVAL -> buildIntervalTrigger(jobKey, identity, schedule);
+    };
   }
 
   private Trigger buildCronTrigger(JobKey jobKey, String identity, @NotNull TaskSchedule schedule) {
@@ -316,7 +309,7 @@ public class DefaultTaskScheduler implements TaskScheduler {
 
   private Trigger buildIntervalTrigger(JobKey jobKey, String identity, @NotNull TaskSchedule schedule) {
     val interval = schedule.fixedInterval();
-    if (interval.isZero() || interval.isNegative()) {
+    if (!interval.isPositive()) {
       throw new TaskRegistrationException("fixedInterval must be positive.");
     }
     val startAt = Date.from(schedule.fixedStartAt());
