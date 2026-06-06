@@ -211,7 +211,8 @@ class CollectionOperationsTest {
   @Test
   void testIsProperSubset_emptySetBehavior() {
     assertTrue(CollectionOperations.isProperSubset(Collections.emptyList(), List.of(1)));
-    assertFalse(CollectionOperations.isProperSubset(Collections.emptyList(), Collections.emptyList()));
+    assertFalse(
+        CollectionOperations.isProperSubset(Collections.emptyList(), Collections.emptyList()));
     assertFalse(CollectionOperations.isProperSubset(null, null));
   }
 }

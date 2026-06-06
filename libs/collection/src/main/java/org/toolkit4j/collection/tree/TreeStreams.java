@@ -9,8 +9,7 @@ import org.jetbrains.annotations.NotNull;
 final class TreeStreams {
   private TreeStreams() {}
 
-  static <T> @NotNull Stream<TreeNode<T>> breadthFirst(
-      @NotNull Collection<TreeNode<T>> roots) {
+  static <T> @NotNull Stream<TreeNode<T>> breadthFirst(@NotNull Collection<TreeNode<T>> roots) {
     var queue = new ArrayDeque<>(roots);
     return Stream.generate(
             () -> {

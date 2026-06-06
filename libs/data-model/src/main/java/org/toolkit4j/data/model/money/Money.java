@@ -1,11 +1,10 @@
 package org.toolkit4j.data.model.money;
 
+import io.soabase.recordbuilder.core.RecordBuilder;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
 import java.util.Objects;
-
-import io.soabase.recordbuilder.core.RecordBuilder;
 import org.jetbrains.annotations.NotNull;
 
 @RecordBuilder

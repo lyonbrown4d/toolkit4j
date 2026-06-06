@@ -232,8 +232,7 @@ public class Trees {
     return flat.stream()
         .map(node -> new ChildCandidate<>(parentId.apply(node), node))
         .filter(
-            candidate ->
-                candidate.parentId() != null && nodeMap.containsKey(candidate.parentId()))
+            candidate -> candidate.parentId() != null && nodeMap.containsKey(candidate.parentId()))
         .collect(
             Collectors.groupingBy(
                 ChildCandidate::parentId,

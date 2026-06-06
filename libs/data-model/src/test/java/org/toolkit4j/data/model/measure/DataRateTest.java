@@ -20,6 +20,7 @@ class DataRateTest {
   @Test
   void rejectsInvalidRates() {
     assertThrows(IllegalArgumentException.class, () -> DataRate.bytesPerSecond(-1));
-    assertThrows(IllegalArgumentException.class, () -> DataRate.of(DataSize.bytes(1), Duration.ZERO));
+    assertThrows(
+        IllegalArgumentException.class, () -> DataRate.of(DataSize.bytes(1), Duration.ZERO));
   }
 }

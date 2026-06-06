@@ -1,8 +1,7 @@
 package org.toolkit4j.data.model.range;
 
-import java.util.Objects;
-
 import io.soabase.recordbuilder.core.RecordBuilder;
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @RecordBuilder

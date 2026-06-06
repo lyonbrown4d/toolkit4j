@@ -62,15 +62,9 @@ public class CollectionDiff {
                 })
             .toList();
     var unchanged =
-        pairs.stream()
-            .filter(ClassifiedDiffPair::unchanged)
-            .map(ClassifiedDiffPair::pair)
-            .toList();
+        pairs.stream().filter(ClassifiedDiffPair::unchanged).map(ClassifiedDiffPair::pair).toList();
     var changed =
-        pairs.stream()
-            .filter(pair -> !pair.unchanged())
-            .map(ClassifiedDiffPair::pair)
-            .toList();
+        pairs.stream().filter(pair -> !pair.unchanged()).map(ClassifiedDiffPair::pair).toList();
 
     return new DiffResult<>(added, removed, unchanged, changed);
   }

@@ -18,22 +18,22 @@ public record Range<T extends Comparable<? super T>>(Bound<T> lower, Bound<T> up
   }
 
   public static <T extends Comparable<? super T>> @NotNull Range<T> closed(
-    @NotNull T lower, @NotNull T upper) {
+      @NotNull T lower, @NotNull T upper) {
     return new Range<>(Bound.closed(lower), Bound.closed(upper));
   }
 
   public static <T extends Comparable<? super T>> @NotNull Range<T> open(
-    @NotNull T lower, @NotNull T upper) {
+      @NotNull T lower, @NotNull T upper) {
     return new Range<>(Bound.open(lower), Bound.open(upper));
   }
 
   public static <T extends Comparable<? super T>> @NotNull Range<T> closedOpen(
-    @NotNull T lower, @NotNull T upper) {
+      @NotNull T lower, @NotNull T upper) {
     return new Range<>(Bound.closed(lower), Bound.open(upper));
   }
 
   public static <T extends Comparable<? super T>> @NotNull Range<T> openClosed(
-    @NotNull T lower, @NotNull T upper) {
+      @NotNull T lower, @NotNull T upper) {
     return new Range<>(Bound.open(lower), Bound.closed(upper));
   }
 

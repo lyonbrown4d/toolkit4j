@@ -18,6 +18,7 @@ public enum DateTimePattern implements EnumValue<String> {
 
   @Getter(onMethod_ = @NotNull)
   private final String primaryValue;
+
   private final DateTimeFormatter formatter;
 
   DateTimePattern(String primaryValue) {

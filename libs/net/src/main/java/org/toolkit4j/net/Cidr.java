@@ -66,7 +66,8 @@ public final class Cidr {
   }
 
   @Contract("null, _ -> fail")
-  private static @NotNull @Unmodifiable IpAddress normalizeNetwork(IpAddress network, BigInteger normalizedValue) {
+  private static @NotNull @Unmodifiable IpAddress normalizeNetwork(
+      IpAddress network, BigInteger normalizedValue) {
     if (network instanceof Ipv4Address) {
       return Ipv4Address.of(normalizedValue.intValue());
     }
@@ -81,5 +82,4 @@ public final class Cidr {
   public String toString() {
     return network + "/" + prefixLength;
   }
-
 }

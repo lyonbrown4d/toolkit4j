@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.TimeZone;
 import java.util.function.Consumer;
-
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -307,7 +306,8 @@ public class DefaultTaskScheduler implements TaskScheduler {
         .build();
   }
 
-  private Trigger buildIntervalTrigger(JobKey jobKey, String identity, @NotNull TaskSchedule schedule) {
+  private Trigger buildIntervalTrigger(
+      JobKey jobKey, String identity, @NotNull TaskSchedule schedule) {
     val interval = schedule.fixedInterval();
     if (!interval.isPositive()) {
       throw new TaskRegistrationException("fixedInterval must be positive.");

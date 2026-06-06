@@ -2,7 +2,6 @@ package org.toolkit4j.net;
 
 import java.math.BigInteger;
 import java.net.InetAddress;
-
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -75,5 +74,4 @@ public final class Ipv6Address implements IpAddress {
     val inet = InetAddress.getByAddress(bytes());
     return inet.getHostAddress();
   }
-
 }

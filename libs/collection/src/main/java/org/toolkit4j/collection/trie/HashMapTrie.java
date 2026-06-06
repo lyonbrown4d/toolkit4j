@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
 import lombok.val;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;

@@ -33,5 +33,4 @@ public final class PortRange {
   public String toString() {
     return start == end ? String.valueOf(start) : start + "-" + end;
   }
-
 }

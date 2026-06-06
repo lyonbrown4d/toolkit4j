@@ -21,7 +21,7 @@ plugins {
 /** Maven coordinates; Central GitHub namespace is typically io.github.{lowercase login}. */
 group = "io.github.lyonbrown4d"
 
-version = "0.0.6"
+version = "0.0.7"
 
 allprojects {
   repositories {
@@ -77,7 +77,9 @@ subprojects {
           developer {
             id.set(stringPropertyOrDefault("POM_DEVELOPER_ID") { "lyonbrown4d" })
             name.set(stringPropertyOrDefault("POM_DEVELOPER_NAME") { "lyonbrown4d" })
-            url.set(stringPropertyOrDefault("POM_DEVELOPER_URL") { "https://github.com/lyonbrown4d" })
+            url.set(
+              stringPropertyOrDefault("POM_DEVELOPER_URL") { "https://github.com/lyonbrown4d" }
+            )
           }
         }
         scm {

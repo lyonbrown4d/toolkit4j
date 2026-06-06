@@ -276,7 +276,8 @@ class DefaultTaskSchedulerTest {
     scheduler.start();
 
     taskScheduler.register(
-        ManualTriggerJob.class, options -> options.id("shared-id").interval(Duration.ofSeconds(10)));
+        ManualTriggerJob.class,
+        options -> options.id("shared-id").interval(Duration.ofSeconds(10)));
 
     aliasScheduler.register(
         OneTimeJob.class,
@@ -285,8 +286,10 @@ class DefaultTaskSchedulerTest {
 
     assertEquals(1, taskScheduler.listTasks().size());
     assertEquals(1, aliasScheduler.listTasks().size());
-    assertEquals(TaskScheduleKind.INTERVAL, taskScheduler.getTask("shared-id").orElseThrow().scheduleType());
-    assertEquals(TaskScheduleKind.ONCE, aliasScheduler.getTask("shared-id").orElseThrow().scheduleType());
+    assertEquals(
+        TaskScheduleKind.INTERVAL, taskScheduler.getTask("shared-id").orElseThrow().scheduleType());
+    assertEquals(
+        TaskScheduleKind.ONCE, aliasScheduler.getTask("shared-id").orElseThrow().scheduleType());
   }
 
   @Test

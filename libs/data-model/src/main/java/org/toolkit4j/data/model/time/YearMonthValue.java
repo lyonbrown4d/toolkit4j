@@ -1,11 +1,10 @@
 package org.toolkit4j.data.model.time;
 
+import io.soabase.recordbuilder.core.RecordBuilder;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-
-import io.soabase.recordbuilder.core.RecordBuilder;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")

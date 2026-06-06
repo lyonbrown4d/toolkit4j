@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -82,7 +81,7 @@ public class PageableSet<T> implements PageableCollection<T, Set<T>> {
     val size = set.size();
     if (fromIndex < 0 || toIndex > size || fromIndex > toIndex) {
       throw new IndexOutOfBoundsException(
-        "fromIndex=%d, toIndex=%d, size=%d".formatted(fromIndex, toIndex, size));
+          "fromIndex=%d, toIndex=%d, size=%d".formatted(fromIndex, toIndex, size));
     }
     if (fromIndex == toIndex) {
       return emptySet();
