@@ -6,7 +6,7 @@ Current highlights:
 
 - `data-model` includes page, envelope, sort, money, measure, range, enumeration, error, and time-oriented model types.
 - `collection` includes pageable collections, table, trie, tree helpers, and collection diffing.
-- `text` and `net` remain lightweight utility modules rather than framework layers.
+- `text` and `net` remain lightweight utility modules rather than framework layers, with `text` additionally providing common regex rule helpers.
 
 ## Navigation
 
