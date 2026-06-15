@@ -89,6 +89,31 @@ public final class CommonRegex {
       "^1[3-9]\\d{9}$",
       "Matches Mainland China mobile phone numbers.");
 
+  public static final RegexRule CHINA_MOBILE_WITH_AREA_PREFIX = RegexRule.of(
+      "CHINA_MOBILE_WITH_AREA_PREFIX",
+      "^\\+86-?1[3-9]\\d{9}$",
+      "Matches Mainland China mobile phone numbers with optional +86 prefix.");
+
+  public static final RegexRule INTERNATIONAL_PHONE_E164 = RegexRule.of(
+      "INTERNATIONAL_PHONE_E164",
+      "^\\+[1-9]\\d{1,14}$",
+      "Matches E.164 international phone numbers.");
+
+  public static final RegexRule US_PHONE = RegexRule.of(
+      "US_PHONE",
+      "^(?:\\+1[ -]?)?(?:\\(\\d{3}\\)|\\d{3})[ -]?\\d{3}[ -]?\\d{4}$",
+      "Matches common US phone formats.");
+
+  public static final RegexRule UK_PHONE = RegexRule.of(
+      "UK_PHONE",
+      "^(?:\\+44[ -]?)?(?:0\\d{2,4}[ -]?)?\\d{6,8}$",
+      "Matches simplified UK phone number formats.");
+
+  public static final RegexRule HONG_KONG_PHONE = RegexRule.of(
+      "HONG_KONG_PHONE",
+      "^(?:\\+852[ -]?)?\\d{4}[ -]?\\d{4}$",
+      "Matches Hong Kong mobile and fixed-line formats.");
+
   public static final RegexRule CHINESE_SOCIAL_CREDIT_CODE = RegexRule.of(
       "CHINESE_SOCIAL_CREDIT_CODE",
       "^[0-9A-Z]{18}$",

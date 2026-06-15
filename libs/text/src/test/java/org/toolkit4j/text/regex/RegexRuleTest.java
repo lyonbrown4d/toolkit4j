@@ -55,6 +55,27 @@ class RegexRuleTest {
   }
 
   @Test
+  void hasReusableCommonRegionalPhoneRules() {
+    assertTrue(CommonRegex.INTERNATIONAL_PHONE_E164.matches("+8613812345678"));
+    assertTrue(CommonRegex.INTERNATIONAL_PHONE_E164.matches("+12025550186"));
+    assertFalse(CommonRegex.INTERNATIONAL_PHONE_E164.matches("8613812345678"));
+
+    assertTrue(CommonRegex.US_PHONE.matches("202-555-0186"));
+    assertTrue(CommonRegex.US_PHONE.matches("(202) 555-0186"));
+    assertTrue(CommonRegex.US_PHONE.matches("+1 202 555 0186"));
+    assertFalse(CommonRegex.US_PHONE.matches("13812345678"));
+
+    assertTrue(CommonRegex.CHINA_MOBILE_WITH_AREA_PREFIX.matches("+8613812345678"));
+    assertFalse(CommonRegex.CHINA_MOBILE_WITH_AREA_PREFIX.matches("1381234567"));
+
+    assertTrue(CommonRegex.UK_PHONE.matches("+44 20 1234 5678"));
+    assertTrue(CommonRegex.UK_PHONE.matches("020-1234-5678"));
+    assertTrue(CommonRegex.HONG_KONG_PHONE.matches("9123 4567"));
+    assertTrue(CommonRegex.HONG_KONG_PHONE.matches("+852 9123 4567"));
+    assertFalse(CommonRegex.HONG_KONG_PHONE.matches("021-88889999"));
+  }
+
+  @Test
   void hasReusableCommonChineseSocialCreditCodeRule() {
     assertTrue(CommonRegex.CHINESE_SOCIAL_CREDIT_CODE.matches("91350100MA1F0X2X4X5"));
     assertFalse(CommonRegex.CHINESE_SOCIAL_CREDIT_CODE.matches("91350100ma1f0x2x4x5"));
