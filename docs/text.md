@@ -40,3 +40,22 @@ RegexRule mobileRule = CommonRegex.CHINA_MOBILE_WITH_AREA_PREFIX;
 - Empty keywords are rejected because they make match semantics ambiguous.
 - `CommonRegex` exposes shared patterns for common validation scenarios.  
   Some rules (`*_PHONE`) are **regional format helpers** and are not full telephony validation engines.
+
+## Supported regex groups
+
+### General rules
+
+- `ALPHANUMERIC`, `IDENTIFIER`, `INTEGER`, `DECIMAL`, `EMAIL`, `UUID`, `DOMAIN`, `HTTP_URL`, `IPv4`, etc.
+
+### Regional rules
+
+| Group | Rule constants | Typical scenario |
+|---|---|---|
+| China | `CHINESE_MOBILE`, `CHINA_MOBILE_WITH_AREA_PREFIX`, `CHINESE_LANDLINE_PHONE`, `CHINESE_ID_CARD`, `CHINESE_SOCIAL_CREDIT_CODE`, `CHINESE_POSTAL_CODE`, `CHINESE_BANK_CARD`, `CHINESE_CAR_PLATE` | Mainland China identifiers and contact formats commonly used by business systems |
+| North America / International | `INTERNATIONAL_PHONE_E164`, `US_PHONE` | E.164 and typical US 10/11 digit phone displays |
+| UK / Asia | `UK_PHONE`, `HONG_KONG_PHONE`, `JAPANESE_PHONE`, `SINGAPORE_PHONE` | Commonly used regional phone patterns |
+
+### Recommended usage
+
+- For user-facing phone input, treat these patterns as pre-validation.
+- For strict compliance, combine with provider-level checks or dedicated telephony validation if you need strict number assignment and portability guarantees.
