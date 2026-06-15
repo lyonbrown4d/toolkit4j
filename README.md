@@ -13,7 +13,7 @@
 
 ```kotlin
 dependencies {
-  implementation(platform("io.github.lyonbrown4d:toolkit4j-bom:0.0.6"))
+  implementation(platform("io.github.lyonbrown4d:toolkit4j-bom:0.0.8"))
   implementation("io.github.lyonbrown4d:collection")
   // implementation("io.github.lyonbrown4d:text")
   // implementation("io.github.lyonbrown4d:data-model")
@@ -27,12 +27,12 @@ dependencies {
 
 ```kotlin
 dependencies {
-  implementation("io.github.lyonbrown4d:collection:0.0.6")
-  // implementation("io.github.lyonbrown4d:text:0.0.6")
-  // implementation("io.github.lyonbrown4d:data-model:0.0.6")
-  // implementation("io.github.lyonbrown4d:net:0.0.6")
-  // implementation("io.github.lyonbrown4d:hibernate-snowflake-id:0.0.6")
-  // implementation("io.github.lyonbrown4d:quartz-task:0.0.6")
+  implementation("io.github.lyonbrown4d:collection:0.0.8")
+  // implementation("io.github.lyonbrown4d:text:0.0.8")
+  // implementation("io.github.lyonbrown4d:data-model:0.0.8")
+  // implementation("io.github.lyonbrown4d:net:0.0.8")
+  // implementation("io.github.lyonbrown4d:hibernate-snowflake-id:0.0.8")
+  // implementation("io.github.lyonbrown4d:quartz-task:0.0.8")
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
     <dependency>
       <groupId>io.github.lyonbrown4d</groupId>
       <artifactId>toolkit4j-bom</artifactId>
-      <version>0.0.6</version>
+      <version>0.0.8</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -94,3 +94,4 @@ Per-module guides:
 ## License
 
 [Apache License 2.0](./LICENSE.txt)
+

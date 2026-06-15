@@ -1,6 +1,6 @@
 # Data Model
 
-Artifact: `io.github.lyonbrown4d:data-model:0.0.6`
+Artifact: `io.github.lyonbrown4d:data-model:0.0.8`
 
 ## What it provides
 
@@ -222,3 +222,4 @@ var error = ErrorInfo.of("INVALID_INPUT", "invalid input")
 - Module name: `org.toolkit4j.data.model`
 - `data-model` is organized by subpackage responsibility rather than a flat package.
 - Models are intended for reuse across services and API layers.
+

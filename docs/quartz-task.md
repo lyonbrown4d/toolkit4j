@@ -1,6 +1,6 @@
 # Quartz Task
 
-Artifact: `io.github.lyonbrown4d:quartz-task:0.0.6`
+Artifact: `io.github.lyonbrown4d:quartz-task:0.0.8`
 
 ## What it provides
 
@@ -43,3 +43,4 @@ scheduler.register(DemoJob.class, opts -> opts
 - This module keeps Quartz as the execution engine and wraps common scheduling flows with a simpler API.
 - The caller owns the Quartz `Scheduler` lifecycle and is responsible for starting and shutting it down.
 - Operation-level debug logs are emitted through SLF4J under `org.toolkit4j.quartz.task`.
+

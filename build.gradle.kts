@@ -21,7 +21,7 @@ plugins {
 /** Maven coordinates; Central GitHub namespace is typically io.github.{lowercase login}. */
 group = "io.github.lyonbrown4d"
 
-version = "0.0.7"
+version = "0.0.8"
 
 allprojects {
   repositories {

@@ -1,6 +1,6 @@
 # Net
 
-Artifact: `io.github.lyonbrown4d:net:0.0.6`
+Artifact: `io.github.lyonbrown4d:net:0.0.8`
 
 ## What it provides
 
@@ -29,3 +29,4 @@ var info = new IpInfo("192.168.1.10", IpVersion.IPV4);
 - Supports both IPv4 and IPv6 under the same `IpAddress` abstraction.
 - `Cidr` normalizes host bits in the network part, so `192.168.1.99/24` is treated as `192.168.1.0/24`.
 - `Cidr.contains(...)` only matches addresses from the same IP family.
+

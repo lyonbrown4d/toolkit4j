@@ -1,6 +1,6 @@
 # Collection
 
-Artifact: `io.github.lyonbrown4d:collection:0.0.6`
+Artifact: `io.github.lyonbrown4d:collection:0.0.8`
 
 ## What it provides
 
@@ -42,3 +42,4 @@ var changed = diff.changed();
 - `HashMapTrie` is marked experimental in the codebase.
 - `CollectionDiff` requires unique non-null keys on each side; duplicate keys are treated as ambiguous input.
 - This module targets utility scenarios and avoids heavyweight dependencies.
+

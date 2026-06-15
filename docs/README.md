@@ -22,5 +22,6 @@ Current highlights:
 All modules use:
 
 - Group: `io.github.lyonbrown4d`
-- Version: `0.0.6`
-- BOM: `io.github.lyonbrown4d:toolkit4j-bom:0.0.6`
+- Version: `0.0.8`
+- BOM: `io.github.lyonbrown4d:toolkit4j-bom:0.0.8`
+

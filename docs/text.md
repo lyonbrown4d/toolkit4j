@@ -1,6 +1,6 @@
 # Text
 
-Artifact: `io.github.lyonbrown4d:text:0.0.6`
+Artifact: `io.github.lyonbrown4d:text:0.0.8`
 
 ## What it provides
 
@@ -59,3 +59,4 @@ RegexRule mobileRule = CommonRegex.CHINA_MOBILE_WITH_AREA_PREFIX;
 
 - For user-facing phone input, treat these patterns as pre-validation.
 - For strict compliance, combine with provider-level checks or dedicated telephony validation if you need strict number assignment and portability guarantees.
+
