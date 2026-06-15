@@ -114,6 +114,16 @@ public final class CommonRegex {
       "^(?:\\+852[ -]?)?\\d{4}[ -]?\\d{4}$",
       "Matches Hong Kong mobile and fixed-line formats.");
 
+  public static final RegexRule JAPANESE_PHONE = RegexRule.of(
+      "JAPANESE_PHONE",
+      "^(?:\\+81[ -]?)?(?:0\\d{1,4}[ -]?)?\\d{4}[ -]?\\d{4}$",
+      "Matches common Japanese phone number formats.");
+
+  public static final RegexRule SINGAPORE_PHONE = RegexRule.of(
+      "SINGAPORE_PHONE",
+      "^(?:\\+65[ -]?)?[689]\\d{7}$",
+      "Matches common Singapore mobile numbers and service lines.");
+
   public static final RegexRule CHINESE_SOCIAL_CREDIT_CODE = RegexRule.of(
       "CHINESE_SOCIAL_CREDIT_CODE",
       "^[0-9A-Z]{18}$",

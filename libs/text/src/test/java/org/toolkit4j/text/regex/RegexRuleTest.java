@@ -73,6 +73,15 @@ class RegexRuleTest {
     assertTrue(CommonRegex.HONG_KONG_PHONE.matches("9123 4567"));
     assertTrue(CommonRegex.HONG_KONG_PHONE.matches("+852 9123 4567"));
     assertFalse(CommonRegex.HONG_KONG_PHONE.matches("021-88889999"));
+
+    assertTrue(CommonRegex.JAPANESE_PHONE.matches("090-1234-5678"));
+    assertTrue(CommonRegex.JAPANESE_PHONE.matches("+81 90-1234-5678"));
+    assertTrue(CommonRegex.JAPANESE_PHONE.matches("03-1234-5678"));
+    assertFalse(CommonRegex.JAPANESE_PHONE.matches("901234567"));
+
+    assertTrue(CommonRegex.SINGAPORE_PHONE.matches("9123 4567"));
+    assertTrue(CommonRegex.SINGAPORE_PHONE.matches("+65 8123 4567"));
+    assertFalse(CommonRegex.SINGAPORE_PHONE.matches("1234 5678"));
   }
 
   @Test
