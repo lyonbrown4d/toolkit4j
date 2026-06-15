@@ -89,6 +89,21 @@ public final class CommonRegex {
       "^1[3-9]\\d{9}$",
       "Matches Mainland China mobile phone numbers.");
 
+  public static final RegexRule CHINESE_SOCIAL_CREDIT_CODE = RegexRule.of(
+      "CHINESE_SOCIAL_CREDIT_CODE",
+      "^[0-9A-Z]{18}$",
+      "Matches Mainland China Unified Social Credit Code-like values.");
+
+  public static final RegexRule CHINESE_LANDLINE_PHONE = RegexRule.of(
+      "CHINESE_LANDLINE_PHONE",
+      "^(?:0\\d{2,3}-?)?\\d{7,8}$",
+      "Matches common Mainland China fixed-line phone formats.");
+
+  public static final RegexRule CHINESE_BANK_CARD = RegexRule.of(
+      "CHINESE_BANK_CARD",
+      "^\\d{16,19}$",
+      "Matches common Mainland China bank card number length range.");
+
   public static final RegexRule CHINESE_ID_CARD = RegexRule.of(
       "CHINESE_ID_CARD",
       "^(?:[1-9]\\d{5}(?:18|19|20)\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{3}[0-9Xx])$",

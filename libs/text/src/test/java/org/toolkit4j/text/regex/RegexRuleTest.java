@@ -55,6 +55,28 @@ class RegexRuleTest {
   }
 
   @Test
+  void hasReusableCommonChineseSocialCreditCodeRule() {
+    assertTrue(CommonRegex.CHINESE_SOCIAL_CREDIT_CODE.matches("91350100MA1F0X2X4X5"));
+    assertFalse(CommonRegex.CHINESE_SOCIAL_CREDIT_CODE.matches("91350100ma1f0x2x4x5"));
+    assertFalse(CommonRegex.CHINESE_SOCIAL_CREDIT_CODE.matches("91350100MA1F0X2X4X"));
+  }
+
+  @Test
+  void hasReusableCommonChineseLandlinePhoneRule() {
+    assertTrue(CommonRegex.CHINESE_LANDLINE_PHONE.matches("010-88889999"));
+    assertTrue(CommonRegex.CHINESE_LANDLINE_PHONE.matches("02188889999"));
+    assertFalse(CommonRegex.CHINESE_LANDLINE_PHONE.matches("13812345678"));
+    assertFalse(CommonRegex.CHINESE_LANDLINE_PHONE.matches("123456"));
+  }
+
+  @Test
+  void hasReusableCommonChineseBankCardRule() {
+    assertTrue(CommonRegex.CHINESE_BANK_CARD.matches("6217000010000000"));
+    assertFalse(CommonRegex.CHINESE_BANK_CARD.matches("621700001000000"));
+    assertFalse(CommonRegex.CHINESE_BANK_CARD.matches("62170000100000001234"));
+  }
+
+  @Test
   void hasReusableCommonUuidRule() {
     assertTrue(CommonRegex.UUID.matches("f47ac10b-58cc-4372-a567-0e02b2c3d479"));
     assertFalse(CommonRegex.UUID.matches("f47ac10b-58cc-4372-a567-0e02b2c3d47"));
